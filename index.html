@@ -1173,6 +1173,10 @@
         </div>
 
         <form class="signup-form" id="signupForm">
+  <input type="hidden" name="access_key" value="a02485e9-db11-48bb-a5f2-2fa8c58ed044">
+  <input type="hidden" name="subject" value="Novo interessado - FAZ-TUDO">
+  <input type="hidden" name="from_name" value="Site FAZ-TUDO">
+  <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <div class="form-heading">
             <h3>Lista de interessados</h3>
             <p>Preenche os campos abaixo. Demora cerca de um minuto.</p>
@@ -1379,22 +1383,46 @@
       });
     });
 
-    // Formulário: demonstração local.
-    // Para recolher respostas reais, configura um serviço de formulários
-    // e substitui este comportamento.
-    const signupForm = document.getElementById("signupForm");
-    const formMessage = document.getElementById("formMessage");
+   // Formulário: envio real via Web3Forms
+const signupForm = document.getElementById("signupForm");
+const formMessage = document.getElementById("formMessage");
 
-    signupForm.addEventListener("submit", event => {
-      event.preventDefault();
+signupForm.addEventListener("submit", async event => {
+  event.preventDefault();
 
-      if (!signupForm.reportValidity()) return;
+  if (!signupForm.reportValidity()) return;
 
-      formMessage.textContent =
-        "Obrigado pelo teu interesse! O formulário está a funcionar em modo de demonstração: os teus dados ainda não foram enviados. O responsável pelo site terá de ligar um serviço de formulários para receber a tua resposta.";
-      formMessage.classList.add("visible");
-      formMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  const submitButton = signupForm.querySelector(".form-submit");
+  const originalText = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.textContent = "A enviar...";
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: new FormData(signupForm)
     });
+    const result = await response.json();
+
+    if (result.success) {
+      formMessage.textContent =
+        "Obrigado pelo teu interesse! Recebemos a tua resposta e entraremos em contacto em breve.";
+      signupForm.reset();
+    } else {
+      formMessage.textContent =
+        "Ocorreu um erro ao enviar. Tenta novamente dentro de instantes.";
+    }
+  } catch (error) {
+    formMessage.textContent =
+      "Não foi possível enviar. Verifica a tua ligação e tenta novamente.";
+  }
+
+  formMessage.classList.add("visible");
+  formMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  submitButton.disabled = false;
+  submitButton.textContent = originalText;
+});
   </script>
 </body>
 </html>
