@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#173f35">
   <meta name="description" content="Aprende a resolver pequenas reparações em casa, a usar ferramentas e a ganhar autonomia prática. Formação presencial para principiantes.">
-  <title>FAZ-TUDO — A tua autonomia começa aqui</title>
+  <title>Escola do Desenrasque — A tua autonomia começa aqui</title>
 
   <style>
     :root {
@@ -862,9 +862,9 @@
 
   <header>
     <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="FAZ-TUDO — página inicial">
+      <a class="brand" href="#inicio" aria-label="Escola do Desenrasque — página inicial">
         <span class="brand-mark">✳</span>
-        <span>FAZ-TUDO<small>ESCOLA DE AUTONOMIA PRÁTICA</small></span>
+        <span>ESCOLA DO DESENRASQUE<small>AUTONOMIA PRÁTICA</small></span>
       </a>
 
       <button class="menu-toggle" id="menuToggle"
@@ -984,10 +984,10 @@
             <h3>A parede tem manchas</h3>
             <p>Aprende a identificar possíveis causas de humidade e a preparar a parede.</p>
           </article>
-         <article class="problem-card">
-  <div class="problem-icon">🚽</div>
-  <h3>O autoclismo não pára de pingar</h3>
-  <p>Percebe o que podes verificar e quando é altura de pedir ajuda.</p>
+          <article class="problem-card">
+            <div class="problem-icon">🚽</div>
+            <h3>O autoclismo não pára de pingar</h3>
+            <p>Percebe o que podes verificar e quando é altura de pedir ajuda.</p>
           </article>
         </div>
       </div>
@@ -1173,10 +1173,11 @@
         </div>
 
         <form class="signup-form" id="signupForm">
-  <input type="hidden" name="access_key" value="a02485e9-db11-48bb-a5f2-2fa8c58ed044">
-  <input type="hidden" name="subject" value="Novo interessado - FAZ-TUDO">
-  <input type="hidden" name="from_name" value="Site FAZ-TUDO">
-  <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="access_key" value="a02485e9-db11-48bb-a5f2-2fa8c58ed044">
+          <input type="hidden" name="subject" value="Novo interessado - Escola do Desenrasque">
+          <input type="hidden" name="from_name" value="Site Escola do Desenrasque">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
           <div class="form-heading">
             <h3>Lista de interessados</h3>
             <p>Preenche os campos abaixo. Demora cerca de um minuto.</p>
@@ -1265,7 +1266,7 @@
             <input type="checkbox" id="consentimento" name="consentimento" required>
             <span>
               Autorizo o contacto por email para receber informações sobre
-              o projeto FAZ-TUDO e o curso piloto. Posso retirar o meu
+              o projeto Escola do Desenrasque e o curso piloto. Posso retirar o meu
               consentimento a qualquer momento. *
             </span>
           </label>
@@ -1349,7 +1350,7 @@
       <div>
         <a class="brand" href="#inicio">
           <span class="brand-mark">✳</span>
-          <span>FAZ-TUDO<small>ESCOLA DE AUTONOMIA PRÁTICA</small></span>
+          <span>ESCOLA DO DESENRASQUE<small>AUTONOMIA PRÁTICA</small></span>
         </a>
         <p>Projeto em desenvolvimento · Grande Lisboa</p>
       </div>
@@ -1383,46 +1384,46 @@
       });
     });
 
-   // Formulário: envio real via Web3Forms
-const signupForm = document.getElementById("signupForm");
-const formMessage = document.getElementById("formMessage");
+    // Formulário: envio real via Web3Forms
+    const signupForm = document.getElementById("signupForm");
+    const formMessage = document.getElementById("formMessage");
 
-signupForm.addEventListener("submit", async event => {
-  event.preventDefault();
+    signupForm.addEventListener("submit", async event => {
+      event.preventDefault();
 
-  if (!signupForm.reportValidity()) return;
+      if (!signupForm.reportValidity()) return;
 
-  const submitButton = signupForm.querySelector(".form-submit");
-  const originalText = submitButton.textContent;
-  submitButton.disabled = true;
-  submitButton.textContent = "A enviar...";
+      const submitButton = signupForm.querySelector(".form-submit");
+      const originalText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = "A enviar...";
 
-  try {
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Accept": "application/json" },
-      body: new FormData(signupForm)
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: new FormData(signupForm)
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          formMessage.textContent =
+            "Obrigado pelo teu interesse! Recebemos a tua resposta e entraremos em contacto em breve.";
+          signupForm.reset();
+        } else {
+          formMessage.textContent =
+            "Ocorreu um erro ao enviar. Tenta novamente dentro de instantes.";
+        }
+      } catch (error) {
+        formMessage.textContent =
+          "Não foi possível enviar. Verifica a tua ligação e tenta novamente.";
+      }
+
+      formMessage.classList.add("visible");
+      formMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
     });
-    const result = await response.json();
-
-    if (result.success) {
-      formMessage.textContent =
-        "Obrigado pelo teu interesse! Recebemos a tua resposta e entraremos em contacto em breve.";
-      signupForm.reset();
-    } else {
-      formMessage.textContent =
-        "Ocorreu um erro ao enviar. Tenta novamente dentro de instantes.";
-    }
-  } catch (error) {
-    formMessage.textContent =
-      "Não foi possível enviar. Verifica a tua ligação e tenta novamente.";
-  }
-
-  formMessage.classList.add("visible");
-  formMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  submitButton.disabled = false;
-  submitButton.textContent = originalText;
-});
   </script>
 </body>
 </html>
